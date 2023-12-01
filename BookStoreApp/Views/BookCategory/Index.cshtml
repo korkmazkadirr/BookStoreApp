@@ -1,0 +1,67 @@
+﻿@model List<BookCategory>
+
+<h1>Categorized Books</h1>
+
+<form asp-action="FilterByName" method="post">
+    <label class="control-label" for="selectedBookName">Select a Book Name: </label>
+    <select class="form-control" name="bookName" id="selectedBookName">
+        @if (ViewBag.BookNames != null)
+        {
+            foreach (var bookName in ViewBag.BookNames)
+            {
+                <option value="@bookName">@bookName</option>
+            }
+        }
+        else
+        {
+            <p>BookNames is null.</p>
+        }
+    </select>
+    <button type="submit" class="btn btn-primary">Filter</button>
+</form>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Book Name
+            </th>
+            <th>
+                Category Name
+            </th>
+            <th>
+                SubCategory Name
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null)
+        {
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @item.BookName.BookName
+                    </td>
+                    <td>
+                        @item.CategoryName?.CategoryName
+                    </td>
+                    <td>
+                        @item.SubCategoryName?.SubCategoryName
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <text>Model is null.</text>
+        }
+
+    </tbody>
+</table>
